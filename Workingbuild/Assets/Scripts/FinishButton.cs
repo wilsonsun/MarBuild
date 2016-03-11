@@ -8,12 +8,23 @@ public class FinishButton : MonoBehaviour {
 	public GameObject PlanAText;
 	public GameObject PlanBText;
 	public GameObject PlanCText;
+	public GameObject GoalSetText;
 	public Dropdown dropdown;
+	public Dropdown dropdown1;
+	public Dropdown dropdown2;
 	public GameObject FiniButton;
 	public GameObject ShowButton;
 	public GameObject Map;
 	public GameObject tempDropDown;
+	public GameObject tempDropDown1;
+	public GameObject tempDropDown2;
+	public Text Decision;
+	public Text Decision1;
+	public Text Decision2;
+
 	private GameObject PlanDecision;
+	private GameObject PlanDecision1;
+	private GameObject PlanDecision2;
 	private bool trigger;
 
 	public GameObject watchCamera;
@@ -41,14 +52,18 @@ public class FinishButton : MonoBehaviour {
 		PlanCText.SetActive(trigger);
 		FiniButton.SetActive(trigger);
 
-		if (dropdown.value == 0)
-			PlanDecision = PlanAText;
-		else if (dropdown.value == 1)
-			PlanDecision = PlanBText;
-		else
-			PlanDecision = PlanCText;
-		
+		Debug.Log (dropdown.captionText.text);
+		Decision.text = dropdown.captionText.text;
+		Decision1.text = dropdown1.captionText.text;
+		Decision2.text = dropdown2.captionText.text;
+		Decision.enabled = false;
+		Decision1.enabled = false;
+		Decision2.enabled = false;
+
+		GoalSetText.SetActive (false);
 		tempDropDown.SetActive (trigger);
+		tempDropDown1.SetActive (trigger);
+		tempDropDown2.SetActive (trigger);
 		Map.SetActive (trigger);
 		ShowButton.SetActive (!trigger);
 
@@ -57,7 +72,12 @@ public class FinishButton : MonoBehaviour {
 	public void EnableCanvas() {
 		trigger = !trigger;
 		Map.SetActive(trigger);
-		PlanDecision.SetActive (trigger);
+		Decision.enabled = trigger;
+		Decision1.enabled = trigger;
+		Decision2.enabled = trigger;
+		PlanAText.SetActive(trigger);
+		PlanBText.SetActive(trigger);
+		PlanCText.SetActive(trigger);
 
 	}
 
