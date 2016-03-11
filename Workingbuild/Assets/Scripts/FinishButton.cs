@@ -27,7 +27,7 @@ public class FinishButton : MonoBehaviour {
 	private GameObject PlanDecision2;
 	private bool trigger;
 
-	public GameObject watchCamera;
+	public GameObject watch;
 
 	public delegate void TouchAction();
 	public static event TouchAction OnTouch;
@@ -92,7 +92,7 @@ public class FinishButton : MonoBehaviour {
 	public void fireOnWatch(){
 		if (OnWatch != null)
 			OnWatch ();
-		watchCamera.SetActive (!watchCamera.activeSelf);
+		watch.SetActive (!watch.activeSelf);
 
 	}
 	/*
