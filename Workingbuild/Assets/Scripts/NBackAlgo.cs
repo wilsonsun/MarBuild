@@ -31,14 +31,20 @@ public class NBackAlgo : MonoBehaviour {
 	public float height = 3.5f;
 	public float width  = 3.5f;
 
+	public float startChanceOfRepeat = 30f;
 	public float rateOfChange = 1f;
 	public float offsetDist = 0.01f;
 	public int correctLength = 1;
 	public int maxRunningTurns = 10;
 
 
+
 	Transform squareClone;
+
 	float timePassed = 0f;
+	float chanceOfRepeat = 0f;
+
+
 	List<NBackCoord> NBackCoords = new List<NBackCoord>();
 
 	bool squareRepeated = false;
@@ -47,6 +53,8 @@ public class NBackAlgo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		chanceOfRepeat = startChanceOfRepeat;
+
 		squareClone = (Transform) Instantiate(square, transform.position + transform.up*offsetDist, Quaternion.Euler(new Vector3(0f, 0f,0f)));
 		squareClone.SetParent (this.transform);
 		squareClone.transform.localRotation = Quaternion.Euler (new Vector3 (90f, 180f, 180f));
@@ -68,7 +76,24 @@ public class NBackAlgo : MonoBehaviour {
 
 		if (timePassed > rateOfChange){
 			squareClone.gameObject.SetActive (false);
-			PlaceSquare (Random.Range (-1, 2), Random.Range (-1, 2));
+
+			int x = Random.Range (-1, 2);
+			int y = Random.Range (-1, 2);
+
+			//skewing results to increase repetition
+			int chance = Random.Range(0, 101);
+
+			//if chance<chanceOfRepeat, we skew the square
+			//to show up in the same place as NLevel turns ago
+			if (chance < chanceOfRepeat) {
+				x = NBackCoords [NLevel].x;
+				y = NBackCoords [NLevel].y;
+				chanceOfRepeat = startChanceOfRepeat;
+			} else {
+				chanceOfRepeat += 10f;
+			}
+
+			PlaceSquare (x, y);
 			timePassed = 0f;
 		}
 

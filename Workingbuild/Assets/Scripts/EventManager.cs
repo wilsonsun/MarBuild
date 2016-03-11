@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class EventManager : MonoBehaviour 
 {
-	public GameObject watchCamera;
+	//public GameObject watchCamera;
 
 	public delegate void TouchAction();
 	public static event TouchAction OnTouch;
@@ -19,11 +19,11 @@ public class EventManager : MonoBehaviour
 				OnTouch();
 		}
 
-		if (Input.GetKeyUp ("u")) {
+		/*if (Input.GetKeyUp ("u")) {
 			if (OnWatch != null)
 				OnWatch ();
 			watchCamera.SetActive (!watchCamera.activeSelf);
-		}
+		}*/
 	}
 
 	public void fireoffOnTouch() {
