@@ -6,7 +6,7 @@ public class HackingTerminal : MonoBehaviour {
 	public float maxInteractDist = 3f;
 	public float minInteractDist = 0.7f;
 	public GameObject correspondingDoor;
-	public Camera NBackCam;
+	public GameObject NBackPrefab;
 
 	GameObject player;
 
@@ -40,7 +40,7 @@ public class HackingTerminal : MonoBehaviour {
 			print ("Player interacted with " + gameObject.name);
 
 			if (correspondingDoor.GetComponent<DoorBehaviour> ().enabled == false) {
-				NBackCam.gameObject.SetActive (true);
+				NBackPrefab.gameObject.SetActive (true);
 			}
 		}
 	}
@@ -52,8 +52,14 @@ public class HackingTerminal : MonoBehaviour {
 	}
 
 	void EnableDoor(){
-		//disabling door, it will only be enabled if user does
-		//N Back hacking mini game
-		correspondingDoor.GetComponent<DoorBehaviour> ().enabled = true;
+		float dist = Mathf.Abs(Vector3.Distance(player.transform.position, correspondingDoor.transform.position));
+	
+		//enabling door, it will only be enabled if user does
+		//N Back hacking mini game and is close to specific door
+		if (dist <= maxInteractDist /*&& dot > 0f && dot< 0.2f*/) {
+			print ("Player unlocked a door!");
+			correspondingDoor.GetComponent<DoorBehaviour> ().enabled = true;
+		}
+			
 	}
 }
