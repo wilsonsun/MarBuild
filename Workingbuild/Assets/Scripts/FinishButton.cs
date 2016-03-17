@@ -84,7 +84,6 @@ public class FinishButton : MonoBehaviour {
 	public void fireOnTouch() {
 
 		if (OnTouch != null) {
-			Debug.Log ("being fired");
 			OnTouch();
 		}
 	}
