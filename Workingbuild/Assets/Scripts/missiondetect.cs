@@ -16,7 +16,6 @@ public class missiondetect : MonoBehaviour {
 
 	IEnumerator OnTriggerEnter(Collider other)
 	{
-		Debug.Log (other.gameObject.tag);
 
 		if (other.gameObject.tag == "Player") {
 			if (missionImage) {

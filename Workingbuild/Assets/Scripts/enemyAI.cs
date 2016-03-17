@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class enemyAI : MonoBehaviour {
 	public float speed;
 	public Image gameOverimg;
-	public Text goalDispText;
-
 	// Use this for initialization
 	void Start () {
 		gameOverimg.enabled = false;
@@ -20,10 +18,11 @@ public class enemyAI : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "bullet") {
 			Destroy (gameObject);
+
 		} else if (other.gameObject.tag == "Player") {
 			gameOverimg.enabled = true;
-			goalDispText.text = "slfjslfj";
 		}
+
 	}
 
 }
