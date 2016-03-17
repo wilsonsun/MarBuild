@@ -32,27 +32,35 @@ public class FinishButton : MonoBehaviour {
 	public delegate void TouchAction();
 	public static event TouchAction OnTouch;
 	public static event TouchAction OnWatch;
-
+	int pause;
 
 	// Use this for initialization
 	void Start () {
 		ShowButton.SetActive (false);
 		trigger = true;
+		Time.timeScale = 0.0f;
 	}
 
 	// Update is called once per frame
 	void Update () {
 
+
+	}
+
+	bool togglePause() {
+		Time.timeScale = 1f;
+		return(false);
+
 	}
 
 	public void DisableCanvas() {
+		Time.timeScale = 1.0f;
 		trigger = !trigger;
 		PlanAText.SetActive(trigger);
 		PlanBText.SetActive(trigger);
 		PlanCText.SetActive(trigger);
 		FiniButton.SetActive(trigger);
 
-		Debug.Log (dropdown.captionText.text);
 		Decision.text = dropdown.captionText.text;
 		Decision1.text = dropdown1.captionText.text;
 		Decision2.text = dropdown2.captionText.text;
