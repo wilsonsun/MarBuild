@@ -22,7 +22,7 @@ public class tbTUT : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag == "Player") {
+		if (other.gameObject.tag == "Player" && mv == 0) {
 			speed = 0.2f;
 			tbPopup.SetActive (true);
 			mv = 1;
@@ -32,7 +32,6 @@ public class tbTUT : MonoBehaviour {
 	public void disableTB() {
 		if (mv == 1) {
 			tbPopup.SetActive (false);
-			Destroy (gameObject);
 		}
 	}
 }
