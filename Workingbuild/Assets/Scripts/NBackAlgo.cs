@@ -37,8 +37,6 @@ public class NBackAlgo : MonoBehaviour {
 	public int correctLength = 1;
 	public int maxRunningTurns = 10;
 
-
-
 	Transform squareClone;
 
 	float timePassed = 0f;
@@ -83,12 +81,14 @@ public class NBackAlgo : MonoBehaviour {
 			//skewing results to increase repetition
 			int chance = Random.Range(0, 101);
 
+			//print ("Print x and y: "+x+" "+y);
+			//print (NBackCoords [NLevel].x + " " + NBackCoords [NLevel].y);
+
 			//if chance<chanceOfRepeat, we skew the square
 			//to show up in the same place as NLevel turns ago
 			if (chance < chanceOfRepeat) {
 				x = NBackCoords [NLevel].x;
 				y = NBackCoords [NLevel].y;
-				chanceOfRepeat = startChanceOfRepeat;
 			} else {
 				chanceOfRepeat += 10f;
 			}
@@ -176,6 +176,7 @@ public class NBackAlgo : MonoBehaviour {
 					print ("Same N back level detected");
 
 					squareRepeated = true;
+					chanceOfRepeat = startChanceOfRepeat;
 				}
 
 				else
