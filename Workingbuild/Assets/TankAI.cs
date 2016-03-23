@@ -29,6 +29,6 @@ public class TankAI : MonoBehaviour {
 		Rigidbody instantiatedProjectile = Instantiate(projectile,transform.position,transform.rotation)as Rigidbody;
 		//print (instantiatedProjectile);
 		instantiatedProjectile.velocity = transform.TransformDirection(new Vector3(0, speed, 0));
-		Destroy (instantiatedProjectile.gameObject, 3);
+		Destroy (instantiatedProjectile.gameObject, 1.0f);
 	}
 }

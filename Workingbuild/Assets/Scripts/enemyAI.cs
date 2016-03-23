@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class enemyAI : MonoBehaviour {
 	public float speed;
@@ -21,6 +22,7 @@ public class enemyAI : MonoBehaviour {
 
 		} else if (other.gameObject.tag == "Player") {
 			gameOverimg.enabled = true;
+			SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
 		}
 
 	}

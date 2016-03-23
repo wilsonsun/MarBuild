@@ -32,6 +32,6 @@ public class Shooter : MonoBehaviour {
 		print (instantiatedProjectile);
 		instantiatedProjectile.velocity = transform.TransformDirection(new Vector3(0, 0,-speed));
 		Debug.Log ("hello");
-		Destroy (instantiatedProjectile.gameObject, 3);
+		Destroy (instantiatedProjectile.gameObject, 0.1f);
 	}
 }
