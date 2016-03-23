@@ -31,28 +31,28 @@ public class NBackAlgo : MonoBehaviour {
 	public float height = 3.5f;
 	public float width  = 3.5f;
 
-	public float startChanceOfRepeat = 30f;
 	public float rateOfChange = 1f;
 	public float offsetDist = 0.01f;
 	public int correctLength = 1;
 	public int maxRunningTurns = 10;
 
+	[Range(30,70)]
+	public int skewChance = 30;
+
+
+
 	Transform squareClone;
-
 	float timePassed = 0f;
-	float chanceOfRepeat = 0f;
-
-
 	List<NBackCoord> NBackCoords = new List<NBackCoord>();
 
 	bool squareRepeated = false;
 	int timesCorrect = 0;
 	int turnsPassed = 0;
+	int randInt = 0;
+	int origSkewChance;
 
 	// Use this for initialization
 	void Start () {
-		chanceOfRepeat = startChanceOfRepeat;
-
 		squareClone = (Transform) Instantiate(square, transform.position + transform.up*offsetDist, Quaternion.Euler(new Vector3(0f, 0f,0f)));
 		squareClone.SetParent (this.transform);
 		squareClone.transform.localRotation = Quaternion.Euler (new Vector3 (90f, 180f, 180f));
@@ -61,8 +61,9 @@ public class NBackAlgo : MonoBehaviour {
 
 		squareClone.gameObject.SetActive (false);
 		StartCoroutine(CheckingForRepeatSquare());
+		origSkewChance = skewChance;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		timePassed += Time.deltaTime;
@@ -73,27 +74,29 @@ public class NBackAlgo : MonoBehaviour {
 			squareClone.gameObject.SetActive (false);
 
 		if (timePassed > rateOfChange){
+			int x, y;
 			squareClone.gameObject.SetActive (false);
 
-			int x = Random.Range (-1, 2);
-			int y = Random.Range (-1, 2);
+			randInt = Random.Range (0, 101);
 
-			//skewing results to increase repetition
-			int chance = Random.Range(0, 101);
+			x = Random.Range (-1, 2);
+			y = Random.Range (-1, 2);
 
-			//print ("Print x and y: "+x+" "+y);
-			//print (NBackCoords [NLevel].x + " " + NBackCoords [NLevel].y);
+			//skew square positioning!
+			if (randInt < skewChance && NBackCoords.Count > NLevel) {
+				print ("Skewing position");
+				print ("randInt: " + randInt + " skewChance: " + skewChance);
 
-			//if chance<chanceOfRepeat, we skew the square
-			//to show up in the same place as NLevel turns ago
-			if (chance < chanceOfRepeat) {
-				x = NBackCoords [NLevel].x;
-				y = NBackCoords [NLevel].y;
-			} else {
-				chanceOfRepeat += 10f;
+				x = NBackCoords [NLevel-1].x;
+				y = NBackCoords [NLevel-1].y;
+
+				skewChance = origSkewChance;
+			} else if (NBackCoords.Count > NLevel){
+				skewChance += 10;
 			}
 
 			PlaceSquare (x, y);
+
 			timePassed = 0f;
 		}
 
@@ -110,7 +113,8 @@ public class NBackAlgo : MonoBehaviour {
 	}
 
 	private void NBackPassed(){
-		NBackFinished ();
+		if(NBackFinished != null)
+			NBackFinished();
 		NBackCoords.Clear();
 		timesCorrect = 0;
 		turnsPassed = 0;
@@ -147,10 +151,12 @@ public class NBackAlgo : MonoBehaviour {
 		squareRepeated = false;
 		StartCoroutine (CheckingForRepeatSquare());
 		FinishButton.OnTouch += Signal;
+		EventManager.OnTouch += Signal;
 	}
 
 	void OnDisable(){
 		FinishButton.OnTouch -= Signal;
+		EventManager.OnTouch -= Signal;
 	}
 
 	void Signal(){
@@ -170,13 +176,12 @@ public class NBackAlgo : MonoBehaviour {
 			//check to ensure the enough square havve appeared to 
 			//for N level repetitions to actually occur
 			while (NBackCoords.Count == NLevel + 1) {
-				
+
 				if (NBackCoords [0].x == NBackCoords [NLevel].x
-				    && NBackCoords [0].y == NBackCoords [NLevel].y) {
+					&& NBackCoords [0].y == NBackCoords [NLevel].y) {
 					print ("Same N back level detected");
 
 					squareRepeated = true;
-					chanceOfRepeat = startChanceOfRepeat;
 				}
 
 				else
@@ -188,5 +193,5 @@ public class NBackAlgo : MonoBehaviour {
 
 		yield return null;
 	}
-		
+
 }
