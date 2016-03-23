@@ -15,6 +15,7 @@ public class bulletScript : MonoBehaviour {
 	void Update () {
 	
 	}
+
 	IEnumerator OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Enemyone") {
 			//goalDispText.text = "Congrez!!! You kill your first enemy!";
@@ -26,7 +27,7 @@ public class bulletScript : MonoBehaviour {
 			gameOverImg.enabled = true;
 			shootButton.SetActive (false);
 			//yield WaitForSeconds(3);
-			//WaitForSeconds (3.0f);
+			//yield return new WaitForSeconds (3.0f);
 			SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
 			print ("Loaded scene");
 		}

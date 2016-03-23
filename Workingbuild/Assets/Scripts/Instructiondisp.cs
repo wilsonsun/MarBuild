@@ -24,7 +24,7 @@ public class Instructiondisp : MonoBehaviour {
 				instructionText.text = "Tap the middle of the screen to open the door";
 			}
 
-			yield return new WaitForSeconds (3.0f);
+			yield return new WaitForSeconds (5.0f);
 			instructionText.text = "";
 			Destroy (gameObject);
 		}
